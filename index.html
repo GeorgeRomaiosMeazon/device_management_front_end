@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -415,7 +414,7 @@
 
 <!-- Send Commands -->
 <script>
-    const SUBMIT_API_URL = 'http://localhost:30000/management-api/v1/device/execute-command/';
+    const SUBMIT_API_URL = 'http://localhost:30000/management-api/v1/device/incoming-command/';
 
     document.getElementById('submit-button').addEventListener('click', () => {
         const selectedDevices = [];
@@ -442,6 +441,7 @@
         const payload = {
             devices: selectedDevices,
             command_code: commandCode,
+            parameter:"test Parameter",
         };
 
         console.log(payload);
