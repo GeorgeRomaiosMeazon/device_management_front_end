@@ -402,8 +402,8 @@
       const payload = {
         devices: selectedDevices,
         command_code: selectedCommand.value,
-        parameter: commandParameter || ""
-      };
+        parameter: commandParameter ? JSON.parse(commandParameter) : ""
+        };
 
       fetch(SUBMIT_API_URL, {
         method: 'POST',
