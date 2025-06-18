@@ -2,245 +2,230 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Device Serial Numbers and Commands</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        @media (max-width: 768px) {
-            .container {
-                display: block;
-                /* Stacks them vertically */
-            }
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Device Serial Numbers and Commands</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    @media (max-width: 768px) {
+      .container {
+        display: block;
+      }
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: rgba(22, 22, 22, 0.767);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgba(22, 22, 22, 0.767);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-        .container {
-            background: #494949;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            max-width: 1500px;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            /* Horizontally arrange sections */
-            justify-content: space-between;
-        }
+    .container {
+      background: #494949;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      max-width: 1500px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
 
-        h1 {
-            color: #fff;
-            margin-bottom: 1.5rem;
-        }
+    h1, h2 {
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
 
-        h2 {
-            color: #fff;
-            margin-bottom: 1.5rem;
-        }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
 
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
+    .search-box {
+      flex-grow: 1;
+      margin-right: 1rem;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
 
-        .search-box {
-            flex-grow: 1;
-            margin-right: 1rem;
-            padding: 0.5rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
+    .refresh-button {
+      padding: 0.5rem 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-        .refresh-button {
-            padding: 0.5rem 1rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    .refresh-button:hover {
+      background-color: #0056b3;
+    }
 
-        .refresh-button:hover {
-            background-color: #0056b3;
-        }
+    .select-all {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
 
-        .select-all {
-            margin-bottom: 1rem;
-            text-align: left;
-        }
+    .device-list,
+    .command-list {
+      list-style-type: none;
+      padding: 0;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
 
-        .device-list,
-        .command-list {
-            list-style-type: none;
-            padding: 0;
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }
+    .device-item,
+    .command-item {
+      display: flex;
+      align-items: center;
+      background: #444;
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      transition: background 0.3s ease;
+    }
 
-        .device-item,
-        .command-item {
-            display: flex;
-            align-items: center;
-            background: #444;
-            margin: 0.5rem 0;
-            padding: 0.75rem;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            transition: background 0.3s ease;
-        }
+    .device-item:hover,
+    .command-item:hover {
+      background: #555;
+    }
 
-        .device-item:hover,
-        .command-item:hover {
-            background: #555;
-        }
+    .device-checkbox,
+    .command-radio {
+      margin-right: 1rem;
+    }
 
-        .device-checkbox,
-        .command-radio {
-            margin-right: 1rem;
-        }
+    .pagination {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
 
-        .pagination {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: space-between;
-        }
+    .pagination button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-        .pagination button {
-            padding: 0.5rem 1rem;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    .pagination button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
 
-        .pagination button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
+    .device-image {
+      margin-right: 0.5rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 4px;
+    }
 
-        .device-image {
-            margin-right: 0.5rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 4px;
-        }
+    .serial-info,
+    .command-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-        .serial-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
+    .last-updated,
+    .command-description {
+      font-size: 0.875rem;
+      color: #bbb;
+    }
 
+    .container > div {
+      width: 50%;
+    }
 
-        .last-updated {
-            font-size: 0.875rem;
-            color: #bbb;
-        }
+    #device-section {
+      width: 70%;
+    }
 
-        .command-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            color: #ffffff;
-        }
+    #command-section,
+    #device-section {
+      flex: 1;
+    }
 
-        .command-description {
-            font-size: 0.875rem;
-            color: #bbb;
-        }
+    #submit-button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .container>div {
-            width: 50%;
-            /* Allocate equal space to both sections */
-        }
+    #submit-button {
+      width: 200px;
+      margin-bottom: 1rem;
+    }
 
-        #device-section {
-            width: 70%;
-            /* Increased from 60% */
-        }
-
-        #command-section,
-        #device-section {
-            flex: 1; /* Allow both sections to grow and take equal space */
-        }
-        #submit-button-container {
-            display: flex;
-            align-items: center; /* Vertically center the button */
-            justify-content: center; /* Horizontally center the button */
-        }
-
-        #submit-button {
-            width: 50%; /* Make the button take full width of its container */
-            margin: 0; /* Remove any default margin */
-        }
-    </style>
+    #command-parameter {
+      padding: 0.5rem;
+      border-radius: 4px;
+      width: 200px;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <!-- Commands Section (Left) -->
-        <div id="command-section">
-            <h2>Available Commands</h2>
-            <div class="controls">
-                <input type="text" class="search-box" id="command-search-box"
-                    placeholder="Search command descriptions...">
-                <button class="refresh-button" id="refresh-command-button">
-                    <i class="fas fa-sync-alt"></i> Refresh
-                </button>
-            </div>
-            <ul class="command-list" id="commands-list"></ul>
-        </div>
-
-        <!-- Submit Button (Placed Between Sections) -->
-        <div id="submit-button-container">
-            <button id="submit-button" class="refresh-button">
-                Submit Command
-            </button>
-        </div>
-
-        <!-- Device Serial Numbers Section (Right) -->
-        <div id="device-section">
-            <h2>Device Serial Numbers</h2>
-            <div class="controls">
-                <input type="text" class="search-box" id="device-search-box" placeholder="Search serial numbers...">
-                <button class="refresh-button" id="refresh-device-button">
-                    <i class="fas fa-sync-alt"></i> Refresh
-                </button>
-            </div>
-            <div class="select-all">
-                <input type="checkbox" id="select-all-checkbox">
-                <label style="color: #ffffff;" for="select-all-checkbox">Select All</label>
-            </div>
-            <ul style="color: #fff;" class="device-list" id="serial-numbers-list"></ul>
-            <div class="pagination">
-                <button id="prev-device-page" disabled>Previous</button>
-                <span style="color: #ffffff;" id="device-page-info">Page 1</span>
-                <button id="next-device-page" disabled>Next</button>
-            </div>
-        </div>
+  <div class="container">
+    <!-- Commands Section -->
+    <div id="command-section">
+      <h2>Available Commands</h2>
+      <div class="controls">
+        <input type="text" class="search-box" id="command-search-box" placeholder="Search command descriptions..." />
+        <button class="refresh-button" id="refresh-command-button">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+      </div>
+      <ul class="command-list" id="commands-list"></ul>
     </div>
-</body>
 
-</html>
+    <!-- Submit Button + Parameter -->
+    <div id="submit-button-container">
+      <button id="submit-button" class="refresh-button">Submit Command</button>
+      <input type="text" id="command-parameter" placeholder="Optional parameter" />
+    </div>
 
-<script>
+    <!-- Devices Section -->
+    <div id="device-section">
+      <h2>Device Serial Numbers</h2>
+      <div class="controls">
+        <input type="text" class="search-box" id="device-search-box" placeholder="Search serial numbers..." />
+        <button class="refresh-button" id="refresh-device-button">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+      </div>
+      <div class="select-all">
+        <input type="checkbox" id="select-all-checkbox" />
+        <label style="color: #ffffff;" for="select-all-checkbox">Select All</label>
+      </div>
+      <ul style="color: #fff;" class="device-list" id="serial-numbers-list"></ul>
+      <div class="pagination">
+        <button id="prev-device-page" disabled>Previous</button>
+        <span style="color: #ffffff;" id="device-page-info">Page 1</span>
+        <button id="next-device-page" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
     const DEVICE_API_URL = 'http://localhost:30000/management-api/v1/device/serial-numbers/';
-    const COMMAND_API_URL = 'http://localhost:30000/management-api/v1/device/commands/';
+    const COMMAND_API_URL = 'http://localhost:30000/management-api/v1/commands/';
+    const SUBMIT_API_URL = 'http://localhost:30000/management-api/v1/command_receiver';
+    const API_TOKEN = 'dfea6155e4de0b700b2e1cbf876c62c62fa459b8';
 
     const deviceListElement = document.getElementById('serial-numbers-list');
     const commandListElement = document.getElementById('commands-list');
@@ -260,206 +245,208 @@
     let currentDevicePage = 1;
     const itemsPerPage = 100;
 
-    // Fetch device serial numbers
     function fetchDeviceSerialNumbers() {
-        deviceSearchBox.value = ''; // Clear search input on refresh
-        fetch(DEVICE_API_URL)
-            .then(response => response.json())
-            .then(data => {
-                deviceSerialNumbers = data;
-                filterDeviceSerialNumbers();
-            });
-    }
-
-    // Fetch commands
-    function fetchCommands() {
-        commandSearchBox.value = ''; // Clear search input on refresh
-        fetch(COMMAND_API_URL)
-            .then(response => response.json())
-            .then(data => {
-                commands = data;
-                filterCommands();
-            });
-    }
-
-    // Filter device serial numbers
-    function filterDeviceSerialNumbers() {
-        const searchTerm = deviceSearchBox.value.toLowerCase();
-        filteredDeviceSerialNumbers = deviceSerialNumbers.filter(record => record.serial_number.toLowerCase().includes(searchTerm));
-        currentDevicePage = 1;
-        renderDevicePage();
-    }
-
-    // Filter commands
-    function filterCommands() {
-        const searchTerm = commandSearchBox.value.toLowerCase();
-        filteredCommands = commands.filter(command => command.command_description.toLowerCase().includes(searchTerm));
-        renderCommands();
-    }
-
-    // Render device serial numbers
-    function renderDevicePage() {
-        deviceListElement.innerHTML = '';
-        const start = (currentDevicePage - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        const pageItems = filteredDeviceSerialNumbers.slice(start, end);
-
-        if (pageItems.length === 0) {
-            deviceListElement.innerHTML = '<li>No serial numbers found.</li>';
-        } else {
-            pageItems.forEach(record => {
-                const listItem = document.createElement('li');
-                listItem.className = 'device-item';
-
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.className = 'device-checkbox';
-                checkbox.value = record.serial_number;
-                listItem.appendChild(checkbox);
-
-                const deviceImage = document.createElement('img');
-                deviceImage.src = 'https://meazon.com/wp-content/uploads/2022/07/dinrail-advanced_render2.png';
-                deviceImage.alt = 'Device';
-                deviceImage.className = 'device-image';
-                listItem.appendChild(deviceImage);
-
-                const serialInfo = document.createElement('div');
-                serialInfo.className = 'serial-info';
-
-                const serialNumber = document.createElement('span');
-                serialNumber.textContent = record.serial_number;
-                serialInfo.appendChild(serialNumber);
-
-                const lastUpdated = document.createElement('span');
-                lastUpdated.className = 'last-updated';
-                lastUpdated.textContent = `Last updated: ${formatDate(record.last_updated_at)}`;
-                serialInfo.appendChild(lastUpdated);
-
-                listItem.appendChild(serialInfo);
-                deviceListElement.appendChild(listItem);
-            });
-        }
-        devicePageInfo.textContent = `Page ${currentDevicePage}`;
-        prevDevicePageButton.disabled = currentDevicePage === 1;
-        nextDevicePageButton.disabled = end >= filteredDeviceSerialNumbers.length;
-    }
-
-    // Render commands
-    function renderCommands() {
-        commandListElement.innerHTML = '';
-        if (filteredCommands.length === 0) {
-            commandListElement.innerHTML = '<li>No commands found.</li>';
-        } else {
-            filteredCommands.forEach(command => {
-                const listItem = document.createElement('li');
-                listItem.className = 'command-item';
-
-                const radio = document.createElement('input');
-                radio.type = 'radio';
-                radio.name = 'command';
-                radio.className = 'command-radio';
-                radio.value = command.command_code;
-                listItem.appendChild(radio);
-
-                const commandInfo = document.createElement('div');
-                commandInfo.className = 'command-info';
-
-                const commandCode = document.createElement('span');
-                commandCode.textContent = `Code: ${command.command_code}`;
-                commandInfo.appendChild(commandCode);
-
-                const commandDescription = document.createElement('span');
-                commandDescription.className = 'command-description';
-                commandDescription.textContent = `Description: ${command.command_description}`;
-                commandInfo.appendChild(commandDescription);
-
-                listItem.appendChild(commandInfo);
-                commandListElement.appendChild(listItem);
-            });
-        }
-    }
-
-    // Format date
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleString();
-    }
-
-    // Change device page
-    function changeDevicePage(offset) {
-        currentDevicePage += offset;
-        renderDevicePage();
-    }
-
-    // Event listeners
-    selectAllCheckbox.addEventListener('change', () => {
-        const checkboxes = deviceListElement.querySelectorAll('.device-checkbox');
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = selectAllCheckbox.checked;
+      deviceSearchBox.value = '';
+      fetch(DEVICE_API_URL, {
+        headers: { 'Authorization': `Token ${API_TOKEN}` }
+      })
+        .then(res => res.json())
+        .then(data => {
+          deviceSerialNumbers = data;
+          filterDeviceSerialNumbers();
         });
+    }
+
+    function fetchCommands() {
+      commandSearchBox.value = '';
+      fetch(COMMAND_API_URL, {
+        headers: { 'Authorization': `Token ${API_TOKEN}` }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success" && Array.isArray(data.data)) {
+            commands = data.data.map(cmd => ({
+              command_code: cmd.code,
+              command_description: cmd.description
+            }));
+            filterCommands();
+          } else {
+            console.error("Unexpected response:", data);
+          }
+        });
+    }
+
+    function filterDeviceSerialNumbers() {
+      const term = deviceSearchBox.value.toLowerCase();
+      filteredDeviceSerialNumbers = deviceSerialNumbers.filter(d =>
+        d.serial_number.toLowerCase().includes(term)
+      );
+      currentDevicePage = 1;
+      renderDevicePage();
+    }
+
+    function filterCommands() {
+      const term = commandSearchBox.value.toLowerCase();
+      filteredCommands = commands.filter(c =>
+        c.command_description.toLowerCase().includes(term)
+      );
+      renderCommands();
+    }
+
+    function renderDevicePage() {
+      deviceListElement.innerHTML = '';
+      const start = (currentDevicePage - 1) * itemsPerPage;
+      const pageItems = filteredDeviceSerialNumbers.slice(start, start + itemsPerPage);
+
+      if (pageItems.length === 0) {
+        deviceListElement.innerHTML = '<li>No serial numbers found.</li>';
+      } else {
+        pageItems.forEach(record => {
+          const li = document.createElement('li');
+          li.className = 'device-item';
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'device-checkbox';
+          checkbox.value = record.serial_number;
+          li.appendChild(checkbox);
+
+          const img = document.createElement('img');
+          img.src = 'https://meazon.com/wp-content/uploads/2022/07/dinrail-advanced_render2.png';
+          img.className = 'device-image';
+          li.appendChild(img);
+
+          const serialInfo = document.createElement('div');
+          serialInfo.className = 'serial-info';
+
+          const sn = document.createElement('span');
+          sn.textContent = record.serial_number;
+          serialInfo.appendChild(sn);
+
+          const last = document.createElement('span');
+          last.className = 'last-updated';
+          last.textContent = `Last updated: ${new Date(record.last_updated_at).toLocaleString()}`;
+          serialInfo.appendChild(last);
+
+          li.appendChild(serialInfo);
+          deviceListElement.appendChild(li);
+        });
+      }
+
+      devicePageInfo.textContent = `Page ${currentDevicePage}`;
+      prevDevicePageButton.disabled = currentDevicePage === 1;
+      nextDevicePageButton.disabled = start + itemsPerPage >= filteredDeviceSerialNumbers.length;
+    }
+
+    function renderCommands() {
+      commandListElement.innerHTML = '';
+      if (filteredCommands.length === 0) {
+        commandListElement.innerHTML = '<li>No commands found.</li>';
+      } else {
+        filteredCommands.forEach(command => {
+          const li = document.createElement('li');
+          li.className = 'command-item';
+
+          const radio = document.createElement('input');
+          radio.type = 'radio';
+          radio.name = 'command';
+          radio.className = 'command-radio';
+          radio.value = command.command_code;
+          li.appendChild(radio);
+
+          const info = document.createElement('div');
+          info.className = 'command-info';
+
+          const code = document.createElement('span');
+          code.textContent = `Code: ${command.command_code}`;
+          info.appendChild(code);
+
+          const desc = document.createElement('span');
+          desc.className = 'command-description';
+          desc.textContent = `Description: ${command.command_description}`;
+          info.appendChild(desc);
+
+          li.appendChild(info);
+          commandListElement.appendChild(li);
+        });
+      }
+    }
+
+    document.getElementById('submit-button').addEventListener('click', () => {
+      const submitBtn = document.getElementById('submit-button');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
+      const selectedDevices = [];
+      document.querySelectorAll('.device-checkbox:checked').forEach(cb => {
+        selectedDevices.push({ serial_number: cb.value });
+      });
+
+      const selectedCommand = document.querySelector('.command-radio:checked');
+      const commandParameter = document.getElementById('command-parameter').value;
+
+      if (!selectedCommand) {
+        alert('Please select a command.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Command';
+        return;
+      }
+
+      if (selectedDevices.length === 0) {
+        alert('Please select at least one device.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Command';
+        return;
+      }
+
+      const payload = {
+        devices: selectedDevices,
+        command_code: selectedCommand.value,
+        parameter: commandParameter || ""
+      };
+
+      fetch(SUBMIT_API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${API_TOKEN}`,
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") {
+            alert(`✅ ${data.message}`);
+          } else {
+            alert(`⚠️ ${data.message || "Failed to send command."}`);
+          }
+        })
+        .catch(err => {
+          console.error('Error:', err);
+          alert('Failed to send command.');
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Command';
+        });
+    });
+
+    // Pagination and event bindings
+    selectAllCheckbox.addEventListener('change', () => {
+      document.querySelectorAll('.device-checkbox').forEach(cb => cb.checked = selectAllCheckbox.checked);
     });
 
     refreshDeviceButton.addEventListener('click', fetchDeviceSerialNumbers);
     deviceSearchBox.addEventListener('input', filterDeviceSerialNumbers);
-    prevDevicePageButton.addEventListener('click', () => changeDevicePage(-1));
-    nextDevicePageButton.addEventListener('click', () => changeDevicePage(1));
-
+    prevDevicePageButton.addEventListener('click', () => { currentDevicePage--; renderDevicePage(); });
+    nextDevicePageButton.addEventListener('click', () => { currentDevicePage++; renderDevicePage(); });
     refreshCommandButton.addEventListener('click', fetchCommands);
     commandSearchBox.addEventListener('input', filterCommands);
 
-    // Initial fetch
+    // Initial load
     fetchDeviceSerialNumbers();
     fetchCommands();
-</script>
+  </script>
+</body>
 
-<!-- Send Commands -->
-<script>
-    const SUBMIT_API_URL = 'http://localhost:30000/management-api/v1/device/incoming-command/';
-
-    document.getElementById('submit-button').addEventListener('click', () => {
-        const selectedDevices = [];
-        document.querySelectorAll('.device-checkbox:checked').forEach(checkbox => {
-            const deviceItem = checkbox.closest('.device-item');
-            const serialNumber = checkbox.value;
-            const lastUpdatedText = deviceItem.querySelector('.last-updated').textContent;
-            selectedDevices.push({ serial_number: serialNumber });
-        });
-
-        const selectedCommand = document.querySelector('.command-radio:checked');
-        if (!selectedCommand) {
-            alert('Please select a command.');
-            return;
-        }
-
-        if (selectedDevices.length === 0) {
-            alert('Please select at least one device.');
-            return;
-        }
-
-        const commandCode = selectedCommand.value;
-
-        const payload = {
-            devices: selectedDevices,
-            command_code: commandCode,
-            parameter:"test Parameter",
-        };
-
-        console.log(payload);
-
-        fetch(SUBMIT_API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-            .then(response => response.json())
-            .then(data => {
-                alert('Command sent successfully!');
-            })
-            .catch(error => {
-                console.error('Error sending command:', error);
-                alert('Failed to send command.');
-            });
-    });
-</script>
+</html>
