@@ -177,10 +177,12 @@
       width: 200px;
     }
   </style>
+
 </head>
 
 <body>
   <div class="container">
+    
     <!-- Commands Section -->
     <div id="command-section">
       <h2>Available Commands</h2>
@@ -193,11 +195,17 @@
       <ul class="command-list" id="commands-list"></ul>
     </div>
 
-    <!-- Submit Button + Parameter -->
+   
     <div id="submit-button-container">
       <button id="submit-button" class="refresh-button">Submit Command</button>
       <input type="text" id="command-parameter" placeholder="Optional parameter" />
+      <a href="file:///home/gromaios/PycharmProjects/device_management_front_end/history.html">
+        <button class="submit-button">Check Commands history</button>
+      </a>    
     </div>
+    
+
+    
 
     <!-- Devices Section -->
     <div id="device-section">
@@ -219,13 +227,14 @@
         <button id="next-device-page" disabled>Next</button>
       </div>
     </div>
+    
   </div>
 
   <script>
     const DEVICE_API_URL = 'http://localhost:30000/management-api/v1/device/serial-numbers/';
     const COMMAND_API_URL = 'http://localhost:30000/management-api/v1/commands/';
     const SUBMIT_API_URL = 'http://localhost:30000/management-api/v1/command_receiver';
-    const API_TOKEN = 'dfea6155e4de0b700b2e1cbf876c62c62fa459b8';
+    const API_TOKEN = '536d893b32989b6efbccce528e526bad4f294071';
 
     const deviceListElement = document.getElementById('serial-numbers-list');
     const commandListElement = document.getElementById('commands-list');
